@@ -111,11 +111,18 @@ typedef struct {
     [self _setLocationInWindow:location resetPrevious:NO];
 }
 
-- (void)setPhaseAndUpdateTimestamp:(UITouchPhase)phase
+- (void)setPhaseAndUpdateTimestamp:(UITouchPhase)phase timestamp: (NSTimeInterval) timestamp
 {
-    [self setTimestamp:[[NSProcessInfo processInfo] systemUptime]];
+    [self setTimestamp: timestamp];
     [self setPhase:phase];
 }
+
+- (void)setPhaseAndUpdateTimestamp:(UITouchPhase)phase
+{
+    NSTimeInterval timestamp = [[NSProcessInfo processInfo] systemUptime];
+    [self setPhaseAndUpdateTimestamp:phase timestamp:timestamp];
+}
+
 
 - (void)kif_setHidEvent {
     IOHIDEventRef event = kif_IOHIDEventWithTouches(@[self]);
